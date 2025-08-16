@@ -18,7 +18,6 @@ function App() {
         <Route path='/login' element={<Login></Login>}/>
         <Route path='/profile' element={<Profile></Profile>}/>
         <Route path='/feed' element={<Feed></Feed>}/>
-
       </Route>
       </Routes>
       </BrowserRouter> 

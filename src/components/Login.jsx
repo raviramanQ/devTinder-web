@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { addUser } from '../utils/userSlice';
 import { useDispatch } from 'react-redux';
@@ -11,13 +11,14 @@ const Login = () => {
     const [password, setPassword] = React.useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [error,setError] = useState("");
 
     const handleLogin = async () => {
         try{
 
             const res = await axios.post(
               BASE_URL+"/login", 
-              {
+              { 
                 emailId,
                 password
             },
@@ -29,6 +30,7 @@ const Login = () => {
           return navigate("/feed");
         }
         catch(e){
+          setError(e?.response?.data)
             console.error(e);
         }
     };
@@ -59,6 +61,7 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
         />
        </div>
+       <p className='text-red-500'>{error}</p>
        <div className="card-actions justify-center">
        <button className="btn btn-primary" onClick={handleLogin}>Login</button>
       </div>
