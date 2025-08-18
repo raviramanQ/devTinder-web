@@ -165,7 +165,7 @@ const Editprofile = (user) => {
           </div>
       
           {/* Profile Preview */}
-          <UserCard user={{ firstName, lastName, photoUrl, age, gender, about }} />
+          <UserCard user={{ firstName, lastName, photoUrl, age, gender, about }} isProfile={true}/>
         </div>
         {showToasst && (<div className="toast toast-center toast-top">
         <div className="alert alert-success">
