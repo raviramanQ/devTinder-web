@@ -3,6 +3,7 @@ import { BASE_URL } from '../utils/constants';
 import axios from 'axios';
 import { removeFeed } from '../utils/feedSlice';
 import { useDispatch } from 'react-redux';
+import { trackInterestClick, trackIgnoreClick } from '../utils/analytics';
 
 const UserCard = (props) => {
   const { _id,firstName, lastName, age, photoUrl, about, gender } = props.user;
@@ -10,6 +11,12 @@ const UserCard = (props) => {
   const dispatch = useDispatch();
 
   const sendRequest = async (status,userId)=>{
+    // Track GA event
+    if (status === 'interested') {
+      trackInterestClick(userId);
+    } else if (status === 'ignored') {
+      trackIgnoreClick(userId);
+    }
 
     const res = await axios.post(BASE_URL+"/request/send/"+status+"/"+userId,{},{withCredentials:true});
 

@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { addRequest, removeRequest } from '../utils/requestSlice'
 import { useEffect } from 'react'
+import { trackRequestAccept, trackRequestReject } from '../utils/analytics'
 
 const Requests = () => {
 
@@ -15,16 +16,22 @@ const Requests = () => {
 
     const reviewRequests = async (status,_id) => {
       try{
-  
+          // Track GA event
+          if (status === 'accepted') {
+            trackRequestAccept(_id);
+          } else if (status === 'rejected') {
+            trackRequestReject(_id);
+          }
+
           const res = await axios.post(BASE_URL+"/request/review/" +status+"/" +_id,{},{withCredentials:true});
-  
+
           console.log('----req res---',res);
 
           dispatch(removeRequest(_id));
-  
+
       }
       catch(err){
-  
+
       }
   }
 
